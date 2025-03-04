@@ -17,12 +17,12 @@ import { Database } from "lucide-react";
 // Define form schema using Zod
 const formSchema = z.object({
   appname: z.string().min(2, "App Name must be at least 2 characters"),
-  description: z.string().optional(),
+  description: z.string().min(2, "description Name must be at least 2 characters"),
 });
 
 interface FormData {
   appname: string;
-  description?: string;
+  description: string;
 }
 
 export default function DashboardForm() {
@@ -81,8 +81,11 @@ export default function DashboardForm() {
             </div>
             <div>
               <label className="block text-lg font-medium">Description</label>
+          
               <Textarea {...register("description")} placeholder="Add description here..." className="p-3 text-lg" />
-            </div>
+            
+              {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
+              </div>
 
             <div className="flex flex-row gap-14">
               <Button variant="outline" className="flex items-center gap-2 px-4 py-2" onClick={() => setOpen(true)}>
